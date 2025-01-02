@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">todo</string>
+    <string name="record_editor">Редактор записи</string>
+    <string name="record_name">Название записи</string>
+    <string name="record_text">Текст записи</string>
+    <string name="diary">Дневник</string>
+    <string name="no_record">Записи в дневнике отсутствуют</string>
+    <string name="create_record">Создать запись</string>
+    <string name="create_pin">Придумайте PIN-код</string>
+</resources>

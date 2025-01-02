@@ -1,0 +1,11 @@
+﻿  findMinDistance.cpp
+D:\programs\C++\combMath\lw1\lw1\findMinDistance.h(2,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
+  (компиляция исходного файла "findMinDistance.cpp")
+  
+  lw1.cpp
+D:\programs\C++\combMath\lw1\packages\boost.1.84.0\lib\native\include\boost\timer.hpp(25): message : This header is deprecated. Use the facilities in <boost/timer/timer.hpp> instead.
+D:\programs\C++\combMath\lw1\lw1\findMinDistance.h(2,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
+  (компиляция исходного файла "lw1.cpp")
+  
+  Создание кода...
+  lw1.vcxproj -> D:\programs\C++\combMath\lw1\x64\Debug\lw1.exe

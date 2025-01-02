@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/fragmentLogin">
+
+    <fragment
+        android:id="@+id/fragmentEditor"
+        android:name="com.example.todo.UI.FragmentEditor"
+        android:label="FragmentEditor" >
+        <action
+            android:id="@+id/action_fragmentEditor_to_fragmentDiary"
+            app:destination="@id/fragmentDiary" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentDiary"
+        android:name="com.example.todo.UI.FragmentDiary"
+        android:label="FragmentDiary" >
+        <action
+            android:id="@+id/action_fragmentDiary_to_fragmentEditor"
+            app:destination="@id/fragmentEditor" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentLogin"
+        android:name="com.example.todo.ViewModel.FragmentLogin"
+        android:label="FragmentLogin" >
+        <action
+            android:id="@+id/action_fragmentLogin_to_fragmentDiary"
+            app:destination="@id/fragmentDiary" />
+    </fragment>
+</navigation>
