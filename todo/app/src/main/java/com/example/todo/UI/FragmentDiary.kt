@@ -11,6 +11,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.todo.ViewModel.DiaryViewModel
 import com.example.todo.Model.DiaryRecord
 import com.example.todo.R
+import com.example.todo.ViewModel.DiaryAdapter
+import com.example.todo.ViewModel.SortType
 import com.example.todo.databinding.FragmentDiaryBinding
 import kotlinx.coroutines.launch
 import java.util.*
@@ -58,6 +60,19 @@ class FragmentDiary : Fragment(R.layout.fragment_diary) {
 				}
 			}
 		}
+
+		binding.sortAscendingButton.setOnClickListener {
+			viewModel.sortRecords(SortType.DATE_ASCENDING)
+		}
+
+		binding.sortDescendingButton.setOnClickListener {
+			viewModel.sortRecords(SortType.DATE_DESCENDING)
+		}
+
+		binding.sortAlphabeticalButton.setOnClickListener {
+			viewModel.sortRecords(SortType.ALPHABETICAL)
+		}
+
 	}
 
 	private fun updateVisibility(isEmpty: Boolean) {

@@ -1,4 +1,4 @@
-package com.example.todo.UI
+package com.example.todo.ViewModel
 
 import android.os.Bundle
 import android.view.LayoutInflater

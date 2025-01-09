@@ -15,6 +15,12 @@ data class RecordsState(
 	val isFiltered: Boolean
 )
 
+enum class SortType {
+	DATE_ASCENDING,
+	DATE_DESCENDING,
+	ALPHABETICAL
+}
+
 class DiaryViewModel : ViewModel() {
 	private val _state = MutableStateFlow(RecordsState(emptyList(), emptyList(), false))
 	val state: StateFlow<RecordsState> = _state
@@ -96,4 +102,14 @@ class DiaryViewModel : ViewModel() {
 			diaryRecordDao.delete(diaryRecord)
 		}
 	}
+
+	fun sortRecords(sortType: SortType) {
+		val sortedRecords = when (sortType) {
+			SortType.DATE_ASCENDING -> _state.value.filteredRecords.sortedBy { it.createdAt }
+			SortType.DATE_DESCENDING -> _state.value.filteredRecords.sortedByDescending { it.createdAt }
+			SortType.ALPHABETICAL -> _state.value.filteredRecords.sortedBy { it.title }
+		}
+		_state.value = _state.value.copy(filteredRecords = sortedRecords)
+	}
+
 }

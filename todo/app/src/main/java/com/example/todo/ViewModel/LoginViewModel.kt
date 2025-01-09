@@ -7,6 +7,8 @@ import com.example.todo.Infrastructure.SettingStorage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 
 enum class State {
 	CREATE_PIN,
@@ -24,6 +26,9 @@ class LoginViewModel(private val settingStorage: SettingStorage) : ViewModel() {
 
 	private val _state = MutableStateFlow(LoginState(State.CREATE_PIN))
 	val state = _state.asStateFlow()
+
+	private val _navigationEvent = MutableSharedFlow<Unit>()
+	val navigationEvent = _navigationEvent.asSharedFlow()
 
 	private var actualPin: String? = null
 
@@ -44,6 +49,7 @@ class LoginViewModel(private val settingStorage: SettingStorage) : ViewModel() {
 		if (pin.length == 4) {
 			if (pin == actualPin) {
 				_state.value = _state.value.copy(pin = pin, errored = false)
+				triggerNavigation()
 			} else {
 				_state.value = _state.value.copy(pin = "", errored = true)
 			}
@@ -68,6 +74,7 @@ class LoginViewModel(private val settingStorage: SettingStorage) : ViewModel() {
 					settingStorage.savePin(pin)
 				}
 				_state.value = _state.value.copy(pin = pin, errored = false)
+				triggerNavigation()
 			} else {
 				_state.value = _state.value.copy(pin = "", currentState = State.CREATE_PIN, errored = true)
 			}
@@ -76,9 +83,14 @@ class LoginViewModel(private val settingStorage: SettingStorage) : ViewModel() {
 		}
 	}
 
+	private fun triggerNavigation() {
+		viewModelScope.launch {
+			_navigationEvent.emit(Unit)
+		}
+	}
+
 	suspend fun loadActualPin() {
 		actualPin = settingStorage.getPin()
-		Log.i("Your Tag for identy", "Loaded PIN: $actualPin")
 		_state.value = if (actualPin.isNullOrEmpty()) {
 			LoginState(State.CREATE_PIN)
 		} else {

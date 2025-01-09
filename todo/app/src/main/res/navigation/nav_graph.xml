@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentLogin"
-        android:name="com.example.todo.ViewModel.FragmentLogin"
+        android:name="com.example.todo.UI.FragmentLogin"
         android:label="FragmentLogin" >
         <action
             android:id="@+id/action_fragmentLogin_to_fragmentDiary"

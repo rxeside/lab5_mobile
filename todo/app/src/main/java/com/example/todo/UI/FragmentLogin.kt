@@ -1,4 +1,4 @@
-package com.example.todo.ViewModel
+package com.example.todo.UI
 
 import android.os.Bundle
 import android.view.View
@@ -10,6 +10,10 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.todo.Infrastructure.SettingStorage
 import com.example.todo.R
+import com.example.todo.ViewModel.LoginState
+import com.example.todo.ViewModel.LoginViewModel
+import com.example.todo.ViewModel.LoginViewModelFactory
+import com.example.todo.ViewModel.State
 import com.example.todo.databinding.FragmentLoginBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -37,18 +41,18 @@ class FragmentLogin : Fragment(R.layout.fragment_login) {
 			}
 		}
 
+		viewLifecycleOwner.lifecycleScope.launch {
+			viewModel.navigationEvent.collectLatest {
+				navigateToDiary()
+			}
+		}
+
 		setButtonListeners()
 	}
 
+
 	private fun handleState(loginState: LoginState) {
 		updatePinView(loginState)
-
-		if (loginState.currentState in listOf(State.ENTER_PIN, State.REPEAT_PIN) &&
-			loginState.pin.length == 4 &&
-			!loginState.errored
-		) {
-			navigateToDiary()
-		}
 
 		if (loginState.errored) {
 			showErrorToast()
