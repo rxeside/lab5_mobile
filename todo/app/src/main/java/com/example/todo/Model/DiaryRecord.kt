@@ -17,4 +17,10 @@ data class DiaryRecord(
 
 	@ColumnInfo(name = "created_at")
 	val createdAt: Long,
+
+	@ColumnInfo(name = "due_date")
+	val dueDate: Long?,
+
+	@ColumnInfo(name = "status")
+	val status: String
 )

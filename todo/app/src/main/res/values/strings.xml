@@ -3,8 +3,21 @@
     <string name="record_editor">Редактор записи</string>
     <string name="record_name">Название записи</string>
     <string name="record_text">Текст записи</string>
-    <string name="diary">Дневник</string>
+    <string name="diary">Список задач</string>
     <string name="no_record">Записи в дневнике отсутствуют</string>
     <string name="create_record">Создать запись</string>
     <string name="create_pin">Придумайте PIN-код</string>
+    <string name="due_date">срок сдачи</string>
+    <string name="search_hint">поиск</string>
+    <string name="clear_search">очистить</string>
+    <string name="status">Статус</string>
+    <string name="status_format">Статус: %1$s</string>
+    <string name="created_date_format">Создано: %1$s</string>
+    <string name="due_date_format">Срок: %1$s</string>
+    <string-array name="status_options">
+        <item>СОЗДАНА</item>
+        <item>В ПРОЦЕССЕ</item>
+        <item>ЗАВЕРШЕНА</item>
+    </string-array>
+
 </resources>

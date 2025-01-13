@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todo.Model.DiaryRecord
+import com.example.todo.R
 import com.example.todo.databinding.ItemDiaryBinding
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -21,24 +22,34 @@ class DiaryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 	) {
 		binding.recordTitle.text = diaryRecord.title
 		binding.recordContent.text = diaryRecord.content
+		binding.recordStatus.text = itemView.context.getString(R.string.status_format, diaryRecord.status)
+
 
 		val formattedDate = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(diaryRecord.createdAt)
-		binding.recordDate.text = formattedDate
+		binding.recordDate.text = itemView.context.getString(R.string.created_date_format, formattedDate)
+
+		diaryRecord.dueDate?.let {
+			val dueDateFormatted = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(it)
+			binding.recordDate.text = itemView.context.getString(R.string.due_date_format, dueDateFormatted)
+		} ?: run {
+			binding.recordDate.text = "Срок: не указан"
+		}
 
 		binding.root.setOnClickListener {
-			val arguments = Bundle().apply {
-				putString("TITLE", diaryRecord.title)
-				putString("CONTENT", diaryRecord.content)
+			val bundle = Bundle().apply {
 				putString("ID", diaryRecord.uid)
+				putCharSequence("TITLE", diaryRecord.title)
+				putCharSequence("CONTENT", diaryRecord.content)
 				putLong("DATE", diaryRecord.createdAt)
+				putLong("DUE_DATE", diaryRecord.dueDate ?: System.currentTimeMillis())
+				putString("STATUS", diaryRecord.status)
 			}
-			navigateToEditor(arguments)
+			navigateToEditor(bundle)
 		}
 
-		binding.recordDeleteButton.setOnClickListener {
-			removeDiaryRecord(diaryRecord)
-		}
+		binding.recordDeleteButton.setOnClickListener { removeDiaryRecord(diaryRecord) }
 	}
+
 }
 
 class DiaryAdapter(

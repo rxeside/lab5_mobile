@@ -16,6 +16,8 @@ class StorageApp : Application() {
 			applicationContext,
 			AppDatabase::class.java,
 			"diary-database",
-		).build()
+		)
+			.addMigrations(AppDatabase.MIGRATION_1_2, AppDatabase.MIGRATION_2_3)
+			.build()
 	}
 }

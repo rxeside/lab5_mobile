@@ -77,6 +77,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/dueDateInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/due_date">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/dueDateInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="date" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Spinner
+                android:id="@+id/statusSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/status_options"
+                android:layout_marginTop="16dp"
+                />
+
         </LinearLayout>
     </ScrollView>
 

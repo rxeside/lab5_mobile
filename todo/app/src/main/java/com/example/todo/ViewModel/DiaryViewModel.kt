@@ -62,39 +62,44 @@ class DiaryViewModel : ViewModel() {
 		}
 	}
 
-	fun createDiaryRecord(title: String, content: String) {
+	fun createDiaryRecord(title: String, content: String, dueDate: Long?, status: String = "СОЗДАНА") {
 		viewModelScope.launch {
 			val diaryRecordDao = StorageApp.db.diaryRecordDao()
-			if (diaryRecordDao.findByTitle(title) != null) {
-				return@launch
-			}
+			if (diaryRecordDao.findByTitle(title) != null) return@launch
 
 			val randomUid = UUID.randomUUID().toString()
 			val newDiaryRecord = DiaryRecord(
-				randomUid,
-				title,
-				content,
-				System.currentTimeMillis(),
+				uid = randomUid,
+				title = title,
+				content = content,
+				createdAt = System.currentTimeMillis(),
+				dueDate = dueDate,
+				status = status
 			)
 
 			diaryRecordDao.insertAll(newDiaryRecord)
 		}
 	}
 
-	fun updateDiaryRecord(uid: String, title: String, content: String, date: Long) {
+
+	fun updateDiaryRecord(uid: String, title: String, content: String, date: Long, dueDate: Long?, status: String) {
 		viewModelScope.launch {
 			val diaryRecordDao = StorageApp.db.diaryRecordDao()
 
 			val diaryRecord = DiaryRecord(
-				uid,
-				title,
-				content,
-				date,
+				uid = uid,
+				title = title,
+				content = content,
+				createdAt = date,
+				dueDate = dueDate,
+				status = status
 			)
 
 			diaryRecordDao.updateAll(diaryRecord)
 		}
 	}
+
+
 
 	fun deleteDiaryRecord(diaryRecord: DiaryRecord) {
 		viewModelScope.launch {
@@ -112,4 +117,27 @@ class DiaryViewModel : ViewModel() {
 		_state.value = _state.value.copy(filteredRecords = sortedRecords)
 	}
 
+	fun searchRecords(query: String) {
+		_state.value = _state.value.copy(
+			filteredRecords = _state.value.allRecords.filter {
+				it.title.contains(query, ignoreCase = true) ||
+						it.content.contains(query, ignoreCase = true)
+			}
+		)
+	}
+
+	fun resetSearch() {
+		_state.value = _state.value.copy(filteredRecords = _state.value.allRecords)
+	}
+
+	fun filterRecordsByStatus(status: String?) {
+		_state.value = _state.value.copy(
+			filteredRecords = if (status == null) {
+				_state.value.allRecords
+			} else {
+				_state.value.allRecords.filter { it.status == status }
+			},
+			isFiltered = status != null
+		)
+	}
 }
